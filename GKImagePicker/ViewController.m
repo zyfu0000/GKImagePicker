@@ -67,7 +67,7 @@
 
 -(void)showResizablePicker:(UIButton*)btn{
     self.imagePicker = [[GKImagePicker alloc] init];
-    self.imagePicker.cropSize = CGSizeMake(296, 300);
+    self.imagePicker.cropSize = CGSizeMake(375, 375);
     self.imagePicker.delegate = self;
 	self.imagePicker.resizeableCropArea = YES;
     

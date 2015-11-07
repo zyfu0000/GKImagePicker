@@ -177,7 +177,7 @@ static CGRect GKScaleRect(CGRect rect, CGFloat scale)
 
         self.userInteractionEnabled = YES;
         self.backgroundColor = [UIColor blackColor];
-        self.scrollView = [[ScrollView alloc] initWithFrame:self.bounds ];
+        self.scrollView = [[ScrollView alloc] initWithFrame:self.bounds];
         self.scrollView.showsHorizontalScrollIndicator = NO;
         self.scrollView.showsVerticalScrollIndicator = NO;
         self.scrollView.delegate = self;
@@ -192,7 +192,7 @@ static CGRect GKScaleRect(CGRect rect, CGFloat scale)
         [self.scrollView addSubview:self.imageView];
     
         
-        self.scrollView.minimumZoomScale = CGRectGetWidth(self.scrollView.frame) / CGRectGetWidth(self.imageView.frame);
+        self.scrollView.minimumZoomScale = 1;//CGRectGetWidth(self.scrollView.frame) / CGRectGetWidth(self.imageView.frame);
         self.scrollView.maximumZoomScale = 20.0;
         [self.scrollView setZoomScale:1.0];
     }
@@ -240,27 +240,24 @@ static CGRect GKScaleRect(CGRect rect, CGFloat scale)
     CGFloat faktoredHeight = 0.f;
     CGFloat faktoredWidth = 0.f;
     
-    if(width > height){
-        
+    if (width > height){
         faktor = width / size.width;
         faktoredWidth = size.width;
         faktoredHeight =  height / faktor;
-        
-    } else {
-        
+    }
+    else {
         faktor = height / size.height;
         faktoredWidth = width / faktor;
         faktoredHeight =  size.height;
     }
     
     self.cropOverlayView.frame = self.bounds;
-    self.scrollView.frame = CGRectMake(xOffset, yOffset, size.width, size.height);
-    self.scrollView.contentSize = CGSizeMake(size.width, size.height);
+    self.scrollView.frame = CGRectMake(xOffset, yOffset - 20, size.width, size.height + 20);
+    self.scrollView.contentSize = CGSizeMake(size.width, faktoredHeight);
     self.imageView.frame = CGRectMake(0, floor((size.height - faktoredHeight) * 0.5), faktoredWidth, faktoredHeight);
 }
 
-#pragma mark -
-#pragma UIScrollViewDelegate Methods
+#pragma mark - UIScrollViewDelegate Methods
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     return self.imageView;
